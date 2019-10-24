@@ -92,7 +92,7 @@ void uart_send_string(const char *str, int len) {
 }
 
 int main() {
-  // FTD (r3) is saved to r14 in h.S
+  // FDT (r3) is saved to r14 in h.S
   register char *fdtp __asm__ ("r14");
   char msg[]="\n----\n";
 
