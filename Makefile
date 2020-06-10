@@ -4,7 +4,8 @@ OBJCOPY=objcopy
 QEMU=~/qemu/bin/qemu-system-ppc64
 QEMU_CMD=$(QEMU) -s -M powernv -cpu POWER9 -nographic -bios ./image.bin
 
-LDFLAGS = -N -T powernv.lds
+LDFLAGS= -N -T powernv.lds -EB
+CFLAGS= -nostdlib -mbig-endian
 
 SRC_C := uart.c
 SRC_S := h.S
@@ -30,10 +31,10 @@ image.bin: image.elf
 image:	image.bin image.map
 
 $(OBJ_C):	$(SRC_C)
-	$(CC) $^ -c -o $@
+	$(CC) $^ -c -o $@ $(CFLAGS)
 
 $(OBJ_S):	$(SRC_S)
-	$(CC) $^ -c -o $@
+	$(CC) $^ -c -o $@ $(CFLAGS)
 
 clean:
 	rm -fr *.o
